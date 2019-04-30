@@ -18,7 +18,7 @@
             label="Tags"
             prepend-icon="label"
             required
-            :rules="[v => !!v || 'Tags is required']"
+            :rules="tagRules"
           ></v-text-field>
         </v-flex>
       </v-layout>
@@ -93,7 +93,12 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       id: 1,
-      valid: false
+      valid: false,
+      tagRules: [
+        v => !!v || 'Tags is required',
+        v => v.split(' ').length <= 5 || 'No more than 5 tags',
+        v => /^[A-zА-яЁё ]+$/.test(v) || 'Tags must be only letters'
+      ]
     }
   },
   computed: {

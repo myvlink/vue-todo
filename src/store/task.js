@@ -11,26 +11,29 @@ class Task {
 
 export default {
   state: {
-    tasks: [],
-    id: 1
+    tasks: JSON.parse(localStorage.getItem('tasks') || '[]'),
+    id: JSON.parse(localStorage.getItem('id') || 0),
   },
 
   mutations: {
     createTask (state, payload) {
       state.tasks.push(payload)
+      localStorage.setItem('tasks', JSON.stringify(state.tasks))
       state.id++
+      localStorage.setItem('id', JSON.stringify(state.id))
     },
     completeTask (state, payload) {
       state.tasks.find(a => a.id == payload).done = true
+      localStorage.setItem('tasks', JSON.stringify(state.tasks))
     },
     
     updateTask (state, {name, description, id}) {
       const task = state.tasks.find( a => {
         return a.id === id
       })
-
       task.name = name
       task.description = description
+      localStorage.setItem('tasks', JSON.stringify(state.tasks))
     }
   },
 
@@ -50,7 +53,6 @@ export default {
     completeTask ({commit}, id) {
       commit('completeTask', +id)
     },
-
     
     updateTask ({commit}, {name, description, id}) {
       commit('updateTask', {
@@ -67,7 +69,10 @@ export default {
       return taskId => {
         return state.tasks.find(task => task.id == taskId)
       }
-    }
+    },
+    id (state) {
+      return state.id
+    },
   }
 }
   

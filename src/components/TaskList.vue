@@ -1,11 +1,7 @@
 <template>
   <v-container>
     <v-layout row wrap>
-    </v-layout>
-    
-    <v-layout>
-      
-      <v-flex xs12 sm3>
+      <v-flex xs12 sm3 class="mb-3">
         <v-switch
           v-model="completed"
           label="Completed"
